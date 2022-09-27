@@ -1,10 +1,46 @@
 //Este componente tem o objetivo de criar um menu lateral com o material UI
 import { Avatar, Divider, Drawer, useTheme, List, ListItemButton, ListItemIcon, ListItemText, Icon, useMediaQuery } from "@mui/material";
 import {Box} from '@mui/system'
+import { useMatch, useNavigate, useResolvedPath } from "react-router-dom";
 import { useAppDrawerContext } from "../../contexts";
 
 interface IMenuLateral {
     children: React.ReactNode
+};
+interface IListItemLinkProps {
+    icone:string;
+    label:string;
+    to:string;
+    onClick: (() => void) | undefined;
+}
+
+//Este componente possibilita o fechamento do menu lateral quando clicamos nele
+const ListItemLink: React.FC<IListItemLinkProps> = ({ to, icone, label, onClick }) => {
+    //Para navegar para outra tela
+    const navigate = useNavigate();
+
+    //Hook - Estes hooks me possibilita saber se o menu está selecionado ou não
+    //Recebe a (to) com a rota
+    const resolvedPath = useResolvedPath(to);
+    //Consegui verificar qual rota está selecionada
+    const match = useMatch({path: resolvedPath.pathname, end:false});
+
+    //Função que trata a navegação e o click
+    const handleClick = () => {
+        navigate(to);
+        //Três formas de resolver undefined
+        // if(onClick) onClick(); | onClick && onClick();
+        onClick?.()
+    };
+
+    return(
+        <ListItemButton selected={!!match} onClick={handleClick}>
+        <ListItemIcon>
+            <Icon>{icone}</Icon>
+            </ListItemIcon>
+            <ListItemText primary={label}/>
+        </ListItemButton>
+    );
 };
 
 export const MenuLateral: React.FC<IMenuLateral> = ({ children}) => {
@@ -15,7 +51,7 @@ export const MenuLateral: React.FC<IMenuLateral> = ({ children}) => {
     const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
     //Com o contexto feito posso acessar a variavel ou a função
-    const {isDrawerOpen, toggleDrawerOpen} = useAppDrawerContext();
+    const {isDrawerOpen, toggleDrawerOpen, drawerOptions} = useAppDrawerContext();
     
     return(
         <>
@@ -45,13 +81,15 @@ export const MenuLateral: React.FC<IMenuLateral> = ({ children}) => {
                 {/* Menu flex=1 significa que o box irá ocupar todo o espaço disponivel */}
                 <Box flex={1}>
                     <List component="nav">
-                        <ListItemButton>
-                            <ListItemIcon>
-                                {/* Duas formas de chamar os icones a 1ª é essa da home e a 2ª a tags vem com o nome do icone.svg -  <HomeIcon/>*/}
-                                <Icon>home</Icon>
-                            </ListItemIcon>
-                            <ListItemText primary="Página Inicial"/>
-                        </ListItemButton>
+                        {drawerOptions.map((drawerOption, index) => (
+                            <ListItemLink
+                            key={index}
+                            icone={drawerOption.icon}
+                            to={drawerOption.path}
+                            label={drawerOption.label}
+                            onClick={smDown ? toggleDrawerOpen : undefined}
+                            />
+                        ))}
                     </List>
                 </Box>
             </Box>
