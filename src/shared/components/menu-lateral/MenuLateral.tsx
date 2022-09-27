@@ -1,6 +1,7 @@
 //Este componente tem o objetivo de criar um menu lateral com o material UI
-import { Avatar, Divider, Drawer, useTheme, List, ListItemButton, ListItemIcon, ListItemText, Icon } from "@mui/material";
+import { Avatar, Divider, Drawer, useTheme, List, ListItemButton, ListItemIcon, ListItemText, Icon, useMediaQuery } from "@mui/material";
 import {Box} from '@mui/system'
+import { useAppDrawerContext } from "../../contexts";
 
 interface IMenuLateral {
     children: React.ReactNode
@@ -9,13 +10,26 @@ interface IMenuLateral {
 export const MenuLateral: React.FC<IMenuLateral> = ({ children}) => {
     //Este useTheme acessa as propriedades de temas do MUI
     const theme = useTheme();
+
+    //Para trabalhar com responsivo, configuramos assim...
+    const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+
+    //Com o contexto feito posso acessar a variavel ou a função
+    const {isDrawerOpen, toggleDrawerOpen} = useAppDrawerContext();
+    
     return(
         <>
          {/* open={true} variant='permanent' 
-         Para abrir o menu na app iremos passar alguns atributos: open=vdd OU variante pode ser permanente=DESKTOP, 
-         temporario=SMARTFONE e persistente 
+         Para abrir o menu na app iremos passar alguns atributos: open=vdd OU variante pode ser 
+         permanente=DESKTOP(continua o tempo todo na tela - sempre aberto), 
+         temporario=SMARTFONE(queremos que ele fica sobre as coisas - fica uma parte transparente e escura) e 
+         persistente(o menu se encolhe e abre mais permanece na tela - se expande na tela e recolhe e fica apenas os icones aparecendo)
         */}
-         <Drawer variant='permanent'>
+        {/* Na nossa app iremos alterna entre permanent e temporario ...., 
+        então, podemos realizar a comparação pra saber qual o tamanho da tela */}
+         <Drawer open={isDrawerOpen} variant={smDown ? 'temporary' : 'permanent'}
+         onClose={toggleDrawerOpen}
+         >
             {/* O Box parece a div, nos ajuda a definir o tamhanho do nosso menu 
             Este Box irá conter todo o conteudo lateral */}
             <Box width={theme.spacing(28)} height="100%" display="flex" flexDirection="column">
@@ -46,7 +60,7 @@ export const MenuLateral: React.FC<IMenuLateral> = ({ children}) => {
         com isto o conteudo da nossa aplicação irá avançar para o centro da tela 112px
         Este box terá o conteudo das paginas
         */}
-        <Box height="100vh" marginLeft={theme.spacing(28)}>
+        <Box height="100vh" marginLeft={smDown ? 0 : theme.spacing(28)}>
             {children}
         </Box>
         </>

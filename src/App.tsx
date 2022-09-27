@@ -3,10 +3,13 @@ import { BrowserRouter } from "react-router-dom";
 import { AppRoutes } from "./routes";
 import { MenuLateral } from "./shared/components";
 import { AppThemeProvider } from "./shared/contexts";
+import { AppDrawerProvider } from "./shared/contexts";
 
 export const App = () => {
   return (
     <AppThemeProvider>
+       <AppDrawerProvider>
+
       {/* <ThemeProvider theme={DarkTheme}> -> com nosso componente de tema pronto este não será necessario*/}
         {/* Tema da site */}
         <BrowserRouter>
@@ -17,6 +20,7 @@ export const App = () => {
           </MenuLateral>
         </BrowserRouter>
       {/* </ThemeProvider> */}
+        </AppDrawerProvider>
     </AppThemeProvider>
   );
 }

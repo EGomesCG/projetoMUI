@@ -23,6 +23,7 @@ export const useAppThemeContext = () => {
 interface IAppThemeProvider {
     children: React.ReactNode
 };
+
 export const AppThemeProvider: React.FC<IAppThemeProvider> = ({children}) => {
     //Utilizo o proprio nome da variavel da interface, ela irá armazenar o valor do tema atual
     //Preciso tbém passar a tipagem - posso passar tbém os valores diretos
