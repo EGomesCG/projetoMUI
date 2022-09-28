@@ -15,12 +15,7 @@ export const AppRoutes = () => {
                 label:'Página Inicial',
                 
             },
-            {
-                icon: 'star',
-                path:'/cidades',
-                label:'Cidades',
-                
-            },
+            
         ])
     }
     , []);
@@ -31,7 +26,7 @@ export const AppRoutes = () => {
             <Route path="/pagina-inicial" element={
                 <Dashboard/>}
             />
-            {/* Teste */}
+            {/* Teste 
             <Route path="/cidades" element={<></>
                 // <Button
                 //     variant="contained"
@@ -39,8 +34,8 @@ export const AppRoutes = () => {
                 //     onClick={toggleDrawerOpen}
                 //     >Menu lateral
                 // </Button>
-                }
-            />
+            }
+            />*/}
             <Route path="*" element={<Navigate to="/pagina-inicial"/>}/>
         </Routes>
     );

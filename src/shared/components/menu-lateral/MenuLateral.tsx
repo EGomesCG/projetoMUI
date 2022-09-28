@@ -2,7 +2,7 @@
 import { Avatar, Divider, Drawer, useTheme, List, ListItemButton, ListItemIcon, ListItemText, Icon, useMediaQuery } from "@mui/material";
 import {Box} from '@mui/system'
 import { useMatch, useNavigate, useResolvedPath } from "react-router-dom";
-import { useAppDrawerContext } from "../../contexts";
+import { useAppDrawerContext, useAppThemeContext } from "../../contexts";
 
 interface IMenuLateral {
     children: React.ReactNode
@@ -52,6 +52,9 @@ export const MenuLateral: React.FC<IMenuLateral> = ({ children}) => {
 
     //Com o contexto feito posso acessar a variavel ou a função
     const {isDrawerOpen, toggleDrawerOpen, drawerOptions} = useAppDrawerContext();
+
+    //Para alternar o tema da app
+    const {toggleTheme} = useAppThemeContext();
     
     return(
         <>
@@ -91,6 +94,16 @@ export const MenuLateral: React.FC<IMenuLateral> = ({ children}) => {
                             onClick={smDown ? toggleDrawerOpen : undefined}
                             />
                         ))}
+                    </List>
+                </Box>
+                <Box>
+                    <List component="nav">
+                        <ListItemButton onClick={toggleTheme}>
+                            <ListItemIcon>
+                                <Icon>dark_mode</Icon>
+                            </ListItemIcon>
+                            <ListItemText primary="Alternar tema"/>
+                        </ListItemButton>
                     </List>
                 </Box>
             </Box>
