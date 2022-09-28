@@ -65,12 +65,13 @@ export const MenuLateral: React.FC<IMenuLateral> = ({ children}) => {
         então, podemos realizar a comparação pra saber qual o tamanho da tela */}
          <Drawer open={isDrawerOpen} variant={smDown ? 'temporary' : 'permanent'}
          onClose={toggleDrawerOpen}
+        
          >
             {/* O Box parece a div, nos ajuda a definir o tamhanho do nosso menu 
             Este Box irá conter todo o conteudo lateral */}
             <Box width={theme.spacing(28)} height="100%" display="flex" flexDirection="column">
                 {/* Estou envolvendo o avatar/img num box */}
-                <Box width="100%" height={theme.spacing(20)} display="flex" alignItems="center" justifyContent="center">
+                <Box    width="100%" height={theme.spacing(20)} display="flex" alignItems="center" justifyContent="center">
                     <Avatar
                     sx={{ height: theme.spacing(12), width: theme.spacing(12)}}
                     alt="Avatar" 
