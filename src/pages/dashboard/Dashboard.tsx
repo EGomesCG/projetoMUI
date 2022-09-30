@@ -1,4 +1,5 @@
 import React from "react";
+import { BarraDeFerramentas } from "../../shared/components";
 import { LayoutBasePagina } from "../../shared/layouts";
 
 interface IDashboard {
@@ -7,7 +8,14 @@ interface IDashboard {
 
 export const Dashboard: React.FC<IDashboard> = ({children}) => {
     return (
-        <LayoutBasePagina titulo="Página Inicial" barraDeFerramentas={<>Barra de Ferramentas</>}>
+        <LayoutBasePagina 
+            titulo="Página Inicial" 
+            barraDeFerramentas={(
+                <BarraDeFerramentas
+                mostrarInput
+                />
+                )}
+        >
             {children}
             Conteudo
         </LayoutBasePagina>
