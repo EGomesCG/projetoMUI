@@ -11,7 +11,7 @@ export const Dashboard: React.FC<IDashboard> = ({children}) => {
         <LayoutBasePagina 
             titulo="Página Inicial" 
             barraDeFerramentas={(
-                <FerramentasDeDetalhes mostrarBotaoSalvarFechar mostrarBotaoSalvarFecharCarregando/>
+                <FerramentasDeDetalhes mostrarBotaoSalvarFechar />
              )}
         >
             {children}
