@@ -1,4 +1,4 @@
-import { Box, useTheme, Paper, Button, Icon, Divider } from "@mui/material";
+import { Box, useTheme, Paper, Button, Icon, Divider, Skeleton } from "@mui/material";
 
 interface IFerramentasDeDetalhesProps{
     textoBotaoNovo?: string;
@@ -8,6 +8,12 @@ interface IFerramentasDeDetalhesProps{
     mostrarBotaoApagar?:boolean;
     mostrarBotaoSalvar?:boolean;
     mostrarBotaoSalvarFechar?:boolean;
+
+    mostrarBotaoNovoCarregando?:boolean;
+    mostrarBotaoVoltarCarregando?:boolean;
+    mostrarBotaoApagarCarregando?:boolean;
+    mostrarBotaoSalvarCarregando?:boolean;
+    mostrarBotaoSalvarFecharCarregando?:boolean;
     
     aoClicarNovo?: () => void;
     aoClicarVoltar?: () => void;
@@ -19,12 +25,18 @@ interface IFerramentasDeDetalhesProps{
 export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
     textoBotaoNovo = 'Novo',
 
+    mostrarBotaoSalvarCarregando = false,
+    mostrarBotaoNovoCarregando = false,
+    mostrarBotaoVoltarCarregando = false,
+    mostrarBotaoApagarCarregando = false,
+    mostrarBotaoSalvarFecharCarregando = false,
+    
     mostrarBotaoSalvar = true,
     mostrarBotaoNovo = true,
     mostrarBotaoVoltar = true,
     mostrarBotaoApagar = true,
     mostrarBotaoSalvarFechar = false,
-    
+
     aoClicarNovo,
     aoClicarVoltar,
     aoClicarApagar,
@@ -43,7 +55,7 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
         gap={1}//diz a distância de um elemento do outro
         alignItems="center"//alinha horizontalmente os itens
     >
-        {mostrarBotaoSalvar && (
+        {(mostrarBotaoSalvar && !mostrarBotaoSalvarCarregando) && (
             <Button
                 variant="contained"//
                 color="primary"//cor do botão
@@ -53,17 +65,25 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
             >Salvar
             </Button>
         )}
-        {mostrarBotaoSalvarFechar && (
+        {(mostrarBotaoSalvarCarregando && (
+            <Skeleton width={110} height={60}/>
+        ))}
+
+        {(mostrarBotaoSalvarFechar && !mostrarBotaoSalvarFecharCarregando) && (
             <Button
-                variant="outlined"//
-                color="primary"//cor do botão
-                disableElevation//desabilitar a sombra
+                variant="outlined"
+                color="primary"
+                disableElevation
                 onClick={aoClicarSalvarFechar}
-                startIcon={<Icon>save</Icon>}//icone
+                startIcon={<Icon>save</Icon>}
             >Salvar e voltar
             </Button>
         )}
-        {mostrarBotaoApagar && (
+        {(mostrarBotaoSalvarFecharCarregando && (
+            <Skeleton width={180} height={60}/>
+        ))}
+
+        {(mostrarBotaoApagar && !mostrarBotaoApagarCarregando) && (
             <Button
                 variant="outlined"//
                 color="primary"//cor do botão
@@ -73,7 +93,11 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
             >Apagar
             </Button>
         )}
-        {mostrarBotaoNovo && (
+        {(mostrarBotaoApagarCarregando && (
+            <Skeleton width={110} height={60}/>
+        ))}
+
+        {(mostrarBotaoNovo && !mostrarBotaoNovoCarregando) && (
             <Button
                 variant="outlined"//
                 color="primary"//cor do botão
@@ -83,8 +107,13 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
             >{textoBotaoNovo}
             </Button>
         )}
+        {(mostrarBotaoNovoCarregando && (
+            <Skeleton width={110} height={60}/>
+        ))}
+
         <Divider variant="middle" orientation="vertical"/>
-        {mostrarBotaoVoltar && (
+
+        {(mostrarBotaoVoltar && !mostrarBotaoVoltarCarregando) && (
             <Button
                 variant="outlined"//
                 color="primary"//cor do botão
@@ -94,6 +123,9 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
             >Voltar
             </Button>
         )}
+         {(mostrarBotaoVoltarCarregando && (
+            <Skeleton width={110} height={60}/>
+        ))}
     </Box>
     );
 };
