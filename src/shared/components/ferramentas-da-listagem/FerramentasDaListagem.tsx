@@ -46,7 +46,7 @@ export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({
                         color="primary"//cor do botão
                         disableElevation//desabilitar a sombra
                         onClick={() => aoClicarBotao}
-                        endIcon={<Icon>add</Icon>}//icone
+                        startIcon={<Icon>add</Icon>}//icone
                     >{textoBotao}
                     </Button>
                 </Box>

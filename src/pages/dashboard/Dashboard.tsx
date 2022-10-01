@@ -1,5 +1,5 @@
 import React from "react";
-import { FerramentasDaListagem } from "../../shared/components";
+import { FerramentasDaListagem, FerramentasDeDetalhes } from "../../shared/components";
 import { LayoutBasePagina } from "../../shared/layouts";
 
 interface IDashboard {
@@ -11,10 +11,8 @@ export const Dashboard: React.FC<IDashboard> = ({children}) => {
         <LayoutBasePagina 
             titulo="Página Inicial" 
             barraDeFerramentas={(
-                <FerramentasDaListagem
-                mostrarInput
-                />
-                )}
+                <FerramentasDeDetalhes></FerramentasDeDetalhes>
+             )}
         >
             {children}
             Conteudo
