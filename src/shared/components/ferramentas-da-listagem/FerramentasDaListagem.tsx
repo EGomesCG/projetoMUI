@@ -1,5 +1,6 @@
 import { Box, Button, Icon, Paper, TextField, useTheme } from "@mui/material";
 import React from "react";
+import { Environment } from "../../environment";
 
 interface IFerramentasDaListagemProps{
     textoBusca?: string;
@@ -34,7 +35,7 @@ export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({
             {mostrarInput && (
                 <TextField
                     size="small"//Este atributo deixa nosso componente coerente
-                    placeholder="Pesquisar..."//Texto de fundo do input
+                    placeholder={Environment.INPUT_DE_BUSCA} //Texto de fundo do input
                     value={textoBusca}
                     onChange={(e) => aoMudarTextoDeBusca?.(e.target.value)}//Qdo coloco ?. entre a função e o valor, significa que só vai executar a função se o valor existir
                 />
