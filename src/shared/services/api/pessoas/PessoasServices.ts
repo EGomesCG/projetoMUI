@@ -43,14 +43,55 @@ const getAll = async (page = 1, filter = ''): Promise< IPessoasComTotalCount | E
         return new Error((error as {message: string}).message || 'Erro ao listar os registros.');
     }
 };
-const getById = async(): Promise<any> => {
+const getById = async(id: number): Promise< IDetalhePessoa | Error> => {
+    try{
+        const {data} = await Api.get(`/pessoas/${id}`);
+        if(data){
+            return data;
+        }
+        return new Error('Erro ao listar os registros.');
+    } catch(error) {
+        console.log(error);
+        return new Error((error as {message: string}).message || 'Erro ao listar os registros')
+    }
 
-};const create = async(): Promise<any> => {
-
-};const updateById = async(): Promise<any> => {
-
-};const deleteById = async(): Promise<any> => {
-
+};
+//Como a interface possui o ID encaspuslamos ela no omit, assim, não vai pedir o ID para nós no momento da criação
+//Normalmente a resposta da API quando registramos um novo cadastro, retorna o ID do novo cadastro
+const create = async( dados: Omit<IDetalhePessoa, 'id'> ): Promise<number | Error> => {
+    try{
+        //post enviamos dados para o backend
+        const {data} = await Api.post<IDetalhePessoa>(`/pessoas/`, dados);
+        if(data){
+            //Só retorno o ID pq já possuo os dados no front deste novo registro, não faz sentido o backend ter que retorna os dados 
+            //a não ser se os mesmo sofre alguma alteração ou transformação
+            return data.id;
+        }
+        return new Error('Erro ao criar os registros.');
+    } catch(error) {
+        console.log(error);
+        return new Error((error as {message: string}).message || 'Erro ao criar os registros')
+    }
+};
+const updateById = async(id: number, dados: IDetalhePessoa): Promise<void | Error> => {
+    try{
+        //put altualizando dados no backend
+        //Não precisa esperar os dados do backend
+        await Api.put<IDetalhePessoa>(`/pessoas/${id}`, dados);
+    } catch(error) {
+        console.log(error);
+        return new Error((error as {message: string}).message || 'Erro ao atualizar o registro')
+    }
+};
+const deleteById = async(id: number): Promise<any> => {
+    try{
+        //delete - exclui um registro no backend
+        //Não precisa esperar os dados do backend
+        await Api.delete<IDetalhePessoa>(`/pessoas/${id}`);
+    } catch(error) {
+        console.log(error);
+        return new Error((error as {message: string}).message || 'Erro ao apagar o registro')
+    }
 };
 export const PessoasService ={
     getAll,
